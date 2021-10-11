@@ -2,6 +2,7 @@
 require('dotenv').config();
 var dbUser = process.env.DB_USER;
 var dbPassword = process.env.DB_PASSWORD;
+var dbHost = process.env.DB_HOST;
 module.exports = {
-    urlDatabase: `mongodb+srv://${dbUser}:${dbPassword}@cluster0.2cjt6.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+    urlDatabase: `mongodb+srv://${dbUser}:${dbPassword}@${dbHost}`
 }
