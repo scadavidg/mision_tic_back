@@ -8,7 +8,7 @@ const cors = require('cors');
 //inicializando nuestra aplicación de express
 const app = express();
 
-//usando cors para peticiones de origen cruzado para
+//usando cors para peticiones de origen cruzado para recursos compartidos
 app.use(cors());
 
 //configuramos nuestra API para trabajar con objetos tipo JSON en las peticiones HTTP
@@ -49,5 +49,5 @@ const routes = require('./routes');
 /*usando las rutas de productos para toda las peticiones
  que llegen a nuestra API con /productos */
 app.use('/productos', routes.productsRouter);
-
 app.use('/usuarios', routes.usersRouter);
+app.use('/auth', routes.authRouter);

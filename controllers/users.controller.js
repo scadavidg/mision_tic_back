@@ -6,10 +6,10 @@ const getUser = async (req, res) => {
     if (req.params.id != 'undefined') {
         try {
             let user = await UserSchema.findById(req.params.id);
-            res.status(200).json({ data: user });
+            return res.status(200).json({ data: user });
         }
         catch (err) {
-            res.status(404).json({
+            return res.status(404).json({
                 error: {
                     code: 404,
                     message: "Usero no encontrado"
@@ -17,7 +17,7 @@ const getUser = async (req, res) => {
             })
         }
     } else {
-        res.status(404).json({
+        return res.status(404).json({
             error: {
                 code: 404,
                 message: "ID not found"
@@ -29,10 +29,10 @@ const getUser = async (req, res) => {
 const getUsers = async (req, res) => {
     try {
         let users = await UserSchema.find();
-        res.status(200).json({ data: users });
+        return res.status(200).json({ data: users });
     }
     catch (err) {
-        res.status(404).json({
+        return res.status(404).json({
             error: {
                 code: 404,
                 message: "Problemas con la base de datos" + err.message
@@ -42,10 +42,8 @@ const getUsers = async (req, res) => {
 }
 
 const createUser = async (req, res) => {
-    //verificando que si hay errores en los parametros de la solictud
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        //si existen errores damos una respuesta erronea
         return res.status(400).json({
             error: {
                 code: 404,
@@ -53,17 +51,28 @@ const createUser = async (req, res) => {
             }
         });
     }
+    let isEmailExist = await UserSchema.findOne({ email: req.body.email});
+    console.log(isEmailExist);
+    if(isEmailExist){
+        return res.status(400).json({
+            error: {
+                code: 400,
+                message: "El usuario ya se encuentra regstrado"
+            }
+        })
+    }
+
     let newUser = req.body
     let salt = await bcrypt.genSalt(10);
-    console.log(newUser.password)
     newUser.password = await bcrypt.hash(newUser.password, salt);
+
     let user = new UserSchema(newUser);
     try {
         await user.save();
-        res.status(201).json({ data: user });
+        return res.status(201).json({ data: user });
     }
     catch (err) {
-        res.status(404).json({
+        return res.status(404).json({
             error: {
                 code: 404,
                 message: "Problemas con la base de datos" + err.message
@@ -90,10 +99,10 @@ const updateUser = async (req, res) => {
             password: req.body.password
         }
         await UserSchema.findByIdAndUpdate(req.params.id, newUser);
-        res.status(201).json({ data: newUser })
+        return res.status(201).json({ data: newUser })
     }
     catch (err) {
-        res.status(404).json({
+        return res.status(404).json({
             error: {
                 code: 404,
                 message: "ID not found"
@@ -107,10 +116,10 @@ const deleteUser = async (req, res) => {
     if (req.params.id != 'undefined') {
         try {
             let result = await UserSchema.findByIdAndRemove(req.params.id);
-            res.status(200).json({ data: result });
+            return res.status(200).json({ data: result });
         }
         catch (err) {
-            res.status(404).json({
+            return res.status(404).json({
                 error: {
                     code: 404,
                     message: "Usero no encontrado"
@@ -118,7 +127,7 @@ const deleteUser = async (req, res) => {
             })
         }
     } else {
-        res.status(404).json({
+        return res.status(404).json({
             error: {
                 code: 404,
                 message: "ID not found"
