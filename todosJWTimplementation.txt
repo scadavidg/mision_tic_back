@@ -1,0 +1,3 @@
+1. Crear el crud de usuarios listo 
+2. crear la ruta asociado al login : desde esta ruta se va generar el JWT listo
+3. Crear un Middleware que me permita gestionar el control de acceso a las rutas limitas usando ese JWT listo
