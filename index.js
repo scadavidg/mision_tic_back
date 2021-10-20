@@ -20,6 +20,7 @@ app.use(express.json())
 //importando la configuración de conexion con la base de datos
 const dbConfig = require('./config/dbConfig');
 //creando la conexion con la base de datos mongoDB
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 mongoose.connect(dbConfig.urlDatabase)
     .then(db => console.log("db connected"))
     .catch(err => console.error(err))
