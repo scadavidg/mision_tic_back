@@ -2,6 +2,7 @@ const { Router } = require('express');
 const router = Router();
 const { body } = require('express-validator');
 const { authController } = require('../controllers')
+const verifyToken = require('../middlewares/verifyToken');
 
 router.post('/login',
     body('email', 'El email es requerido y debe estar entre(6,100) carecteres')
@@ -11,5 +12,7 @@ router.post('/login',
         .isLength({ min: 8, max: 16 }),
     authController.login
 )
+
+router.get('/verifyToken',verifyToken,authController.validateToken)
 
 module.exports = router;

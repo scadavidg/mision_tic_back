@@ -3,6 +3,7 @@ require('dotenv').config();
 
 const verifyToken = async (req, res, next) => {
     const token = req.header('auth-token');
+    console.log(token);
     if (!token) {
         return res.status(403).json({
             error: {
@@ -14,7 +15,6 @@ const verifyToken = async (req, res, next) => {
 
     try {
         const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-        console.log(verified);
         next();
     } catch (error) {
         return res.status(403).json({
