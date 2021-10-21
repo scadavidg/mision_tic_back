@@ -59,7 +59,7 @@ const createSale = async (req, res) => {
         if(mongoose.Types.ObjectId.isValid(element._id)){
             let product = await ProductSchema.findById(element._id);
             if(!product) {
-                res.status(400).json({
+                return res.status(400).json({
                     error: {
                         code: 404,
                         message: `Producto con id:${element._id} no existe`
@@ -67,7 +67,7 @@ const createSale = async (req, res) => {
                 })
             }
         }else{
-            res.status(400).json({
+            return res.status(400).json({
                 error: {
                     code: 404,
                     message: `Producto con id:${element._id} no existe`
@@ -75,7 +75,6 @@ const createSale = async (req, res) => {
             })
         }
     }); 
-
 
     let sale = new SaleSchema(req.body);
     try {
