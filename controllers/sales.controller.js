@@ -1,5 +1,7 @@
 const SaleSchema = require('../models/sale');
+const ProductSchema = require('../models/product');
 const { validationResult } = require('express-validator');
+const mongoose = require('mongoose');
 
 const getSale = async (req, res) => {
     if (req.params.id != 'undefined') {
@@ -11,7 +13,7 @@ const getSale = async (req, res) => {
             res.status(404).json({
                 error: {
                     code: 404,
-                    message: "Saleo no encontrado"
+                    message: "Venta no encontrado"
                 }
             })
         }
@@ -26,7 +28,7 @@ const getSale = async (req, res) => {
 }
 
 const getSales = async (req, res) => {
-    try {
+    try {req.params
         let sales = await SaleSchema.find();
         res.status(200).json({ data: sales });
     }
@@ -52,6 +54,29 @@ const createSale = async (req, res) => {
             }
         });
     }
+
+    req.body.productos.forEach(async(element) => {
+        if(mongoose.Types.ObjectId.isValid(element._id)){
+            let product = await ProductSchema.findById(element._id);
+            if(!product) {
+                res.status(400).json({
+                    error: {
+                        code: 404,
+                        message: `Producto con id:${element._id} no existe`
+                    }
+                })
+            }
+        }else{
+            res.status(400).json({
+                error: {
+                    code: 404,
+                    message: `Producto con id:${element._id} no existe`
+                }
+            })
+        }
+    }); 
+
+
     let sale = new SaleSchema(req.body);
     try {
         await sale.save();
