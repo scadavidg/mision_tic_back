@@ -52,7 +52,6 @@ const createUser = async (req, res) => {
         });
     }
     let isEmailExist = await UserSchema.findOne({ email: req.body.email});
-    console.log(isEmailExist);
     if(isEmailExist){
         return res.status(400).json({
             error: {

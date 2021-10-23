@@ -54,6 +54,7 @@ const createSale = async (req, res) => {
             }
         });
     }
+ 
 
     req.body.productos.forEach(async(element) => {
         if(mongoose.Types.ObjectId.isValid(element._id)){

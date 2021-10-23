@@ -14,7 +14,7 @@ router.post('/',
     body('nombreCliente', 'nombreCliente es requerido').exists(),
     body('idCliente', 'idCliente es requerido').exists(),
     body('idVendedor', 'idVendedor es requerido').exists(),
-    body('productos', 'productos son requeridos').exists()
+    body('productos', 'productos son requeridos').exists().notEmpty()
     , verifyToken, salesController.createSale);
 
 router.put('/:id',
@@ -22,7 +22,7 @@ router.put('/:id',
     body('nombreCliente', 'nombreCliente es requerido').exists(),
     body('idCliente', 'idCliente es requerido').exists(),
     body('idVendedor', 'idVendedor es requerido').exists(),
-    body('productos', 'productos son requeridos').exists()
+    body('productos', 'productos son requeridos').exists().notEmpty()
     ,verifyToken, salesController.updateSale);
 
 router.delete('/:id', verifyToken, salesController.deleteSale);
