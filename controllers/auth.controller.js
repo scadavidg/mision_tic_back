@@ -39,5 +39,14 @@ const login = async (req, res) => {
     res.status(200).json({ token });
 }
 
+const validateToken = (req, res) => {
+    return res.status(200).json({
+        data: {
+            code: 200,
+            msg: 'token valido'
+        }
+    });
+}
 
 module.exports.login = login;
+module.exports.validateToken = validateToken;
