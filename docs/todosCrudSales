@@ -1,0 +1,30 @@
+1. Crear modelos de ventas
+2. Definir controladores
+3. Definir las rutas de ventas
+4. Generar control de acceso sobre las rutas de ventas usando jwt
+
+Cada
+ venta debe contar con los siguientes atributos: 
+ Identificador único de venta
+ el valor total de la venta, ?
+ identificador, cantidad y precio unitario de cada producto ?
+ fecha de venta,
+ el documento de identificación y nombre del cliente 
+ encargado de gestionar dicha venta (vendedor).
+
+{
+    "id":"1",
+    "valor": 20000,
+    "fecha" ; "13-10-21",
+    "nombreCliente" : "santiago",
+    "documentoCliente" : "1",
+    "documentoVendedor" : "1",
+
+    "productos":[
+        {
+            id:"1",
+            valor: "2000",
+            cantidad: 2
+        }
+    ]
+}
